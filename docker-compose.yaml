@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  api:
+    image: "node-api"
+    build: ./api
+    container_name: "API"
+    command: npm start
+    restart: always
+    ports:
+      - "3050:3050"
+    volumes:
+      - ./api:/usr/api
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  front:
+    image: "api-front"
+    build: .
+    container_name: "React"
+    command: npm start
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/app
